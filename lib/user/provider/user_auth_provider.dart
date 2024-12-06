@@ -100,7 +100,6 @@ class UserAuthStateNotifier extends StateNotifier<UserModelBase?> {
   }
 
   Future<bool> _onKakaoLogin() async {
-    print(await KakaoSdk.origin);
     try {
       OAuthToken token = await isKakaoTalkInstalled()
           // 카카오톡 실행가능 여부 확인해서 웹으로 실행할지 카카오톡 앱을 실행할지 지정

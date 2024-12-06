@@ -14,7 +14,7 @@
 
                 <!-- "kakao${KAKAO_NATIVE_APP_KEY}://oauth" 형식의 앱 실행 스킴 설정 -->
                 <!-- 카카오 로그인 Redirect URI -->
-                <data android:scheme="kakao85e0a7870ba1a815521ad8d0458c1a4e" android:host="oauth"/>
+                <data android:scheme="kakaofde41eed149ce2459878bd388792bba1" android:host="oauth"/>
             </intent-filter>
         </activity>
 
