@@ -26,6 +26,7 @@ class PermissionProviderStateNotifier extends StateNotifier<PermissionBase?> {
   //앱 초기 실행시 권한을 가지고 오는 상태
   Future<PermissionBase?> initAppRequest() async {
     final permission = await permissionTypes.request();
+
     /**
      * 1. 전부 허가
      * 2. 전부 거부
