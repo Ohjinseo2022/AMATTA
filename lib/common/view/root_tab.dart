@@ -59,95 +59,16 @@ class _RootTabState extends ConsumerState<RootTab>
     super.dispose();
   }
 
-  // Future<PermissionBase?> initPermission() async {
-  //   final result = ref.read(permissionProvider.notifier).initAppRequest();
-  //   if (result is PermissionDenied ||
-  //       result is PermissionRestricted ||
-  //       result is PermissionPermanentlyDenied) {
-  //     showDialog(
-  //         context: context,
-  //         barrierDismissible: false,
-  //         // barrierColor: Colors.white,
-  //         builder: (context) {
-  //           return AlertDialog(
-  //             content: Container(
-  //               width: MediaQuery.of(context).size.width / 4,
-  //               height: MediaQuery.of(context).size.height / 10,
-  //               child: Center(
-  //                   child: Text(
-  //                 "접근권한을 허용해 주세요.",
-  //                 style: defaultTextStyle.copyWith(fontWeight: FontWeight.w700),
-  //               )),
-  //             ),
-  //             actions: [
-  //               ElevatedButton(
-  //                   onPressed: () {
-  //                     openAppSettings();
-  //                   },
-  //                   child: Text("확인"))
-  //             ],
-  //           );
-  //         });
-  //     // throw "캘린더 접근권한이 없습니다.";
-  //   }
-  //   return result;
-  // }
-
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(userAuthProvider);
     final permission = ref.watch(permissionProvider);
-    // if (permission is PermissionLoading) {
-    //   return SplashScreen();
-    // }
-    // return FutureBuilder<PermissionBase?>(
-    //     future: ref.read(permissionProvider.notifier).initAppRequest(),
-    //     builder: (context, snapshot) {
-    //       print("snapshot : ${snapshot.data}");
-    //       if (snapshot.data != null) {
-    //         return snapshot.data is! PermissionGranted
-    //             ? SplashScreen()
-    //             : AnimatedSwitcher(
-    //                 duration: Duration(milliseconds: 500),
-    //                 child: _rootTab(state: state),
-    //               );
-    //       } else {
-    //         return SplashScreen();
-    //       }
-    //     });
     return AnimatedSwitcher(
         duration: Duration(milliseconds: 500),
-        child: permission is PermissionGranted
-            ? _rootTab(state: state)
-            : SplashScreen());
-  }
-
-  _showPermissionAlertDialog() {
-    showDialog(
-        context: context,
-        useSafeArea: true,
-        barrierDismissible: false,
-        // barrierColor: Colors.white,
-        builder: (context) {
-          return AlertDialog(
-            content: Container(
-              width: MediaQuery.of(context).size.width / 4,
-              height: MediaQuery.of(context).size.height / 10,
-              child: Center(
-                  child: Text(
-                "접근권한을 허용해 주세요.",
-                style: defaultTextStyle.copyWith(fontWeight: FontWeight.w700),
-              )),
-            ),
-            actions: [
-              ElevatedButton(
-                  onPressed: () {
-                    openAppSettings();
-                  },
-                  child: Text("확인"))
-            ],
-          );
-        });
+        child:
+            permission is PermissionLoading || permission is! PermissionGranted
+                ? SplashScreen()
+                : _rootTab(state: state));
   }
 
   Widget _rootTab({required UserModelBase? state}) {

@@ -1,6 +1,7 @@
 import 'package:amatta_front/common/const/color.dart';
 import 'package:amatta_front/common/layout/default_layout.dart';
 import 'package:amatta_front/common/model/permission_model.dart';
+import 'package:amatta_front/common/provider/permission_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -37,6 +38,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final permission = ref.watch(permissionProvider);
     return DefaultLayout(
       backgroundColor: BACK_GROUND_COLOR,
       child: SizedBox(
@@ -60,10 +62,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                     ),
                   ),
                 ]),
-            if (widget.permission != null &&
-                    widget.permission is PermissionDenied ||
-                widget.permission is PermissionRestricted ||
-                widget.permission is PermissionPermanentlyDenied)
+            if (permission is PermissionDenied ||
+                permission is PermissionRestricted ||
+                permission is PermissionPermanentlyDenied)
               Container(
                 width: double.infinity,
                 height: double.infinity,
