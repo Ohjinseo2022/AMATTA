@@ -4,6 +4,7 @@ import 'package:amatta_front/common/view/root_tab.dart';
 import 'package:amatta_front/common/view/splash_screen.dart';
 import 'package:amatta_front/list/view/main_list_screen.dart';
 import 'package:amatta_front/user/provider/user_auth_provider.dart';
+import 'package:amatta_front/user/view/join_screen.dart';
 import 'package:amatta_front/user/view/login_screen.dart';
 import 'package:amatta_front/user/view/my_page_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,6 +66,11 @@ class AuthProvider extends ChangeNotifier {
           name: MainListScreen.routeName,
           builder: (_, state) => MainListScreen(),
         ),
+        GoRoute(
+          path: '/join',
+          name: JoinScreen.routeName,
+          builder: (_, state) => JoinScreen(),
+        )
         // GoRoute(
         //     path: '/chat-room',
         //     name: ChatRoomList.routeName,

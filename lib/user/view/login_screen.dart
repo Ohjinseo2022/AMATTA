@@ -4,6 +4,7 @@ import 'package:amatta_front/common/enumeration/social.dart';
 import 'package:amatta_front/common/view/root_tab.dart';
 import 'package:amatta_front/user/model/user_model.dart';
 import 'package:amatta_front/user/provider/user_auth_provider.dart';
+import 'package:amatta_front/user/view/join_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,7 +42,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                   color: GOOGLE_PRIMARY_COLOR)),
           Text(
             "로그인 방법을 선택하세요.",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: GOOGLE_PRIMARY_COLOR),
           ),
           SizedBox(
             height: 15,
@@ -62,7 +63,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
             height: 15,
           ),
           // TODO : 이메일 로그인 ui 만들기
-          _emailLoginButton(onPressed: () {})
+          _emailLoginButton(onPressed: () {}),
+          _emailJoin(onPressed: () {
+            context.pushNamed(JoinScreen.routeName);
+            widget.animationController?.animateTo(0);
+          }),
           // _NaverLoginButton(onPressed: () async {
           //   await onLoginHandler(
           //       context: context, platform: SocialTypeCode.NAVER.code);
@@ -118,6 +123,35 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
   //       label: 'Naver로 로그인',
   //       backgroundColor: NAVER_PRIMARY_COLOR);
   // }
+}
+
+Widget _emailJoin({required VoidCallback? onPressed}) {
+  return TextButton(
+    onPressed: onPressed,
+    style: TextButton.styleFrom(
+      padding: EdgeInsets.all(5.0),
+      foregroundColor: ICON_DEFAULT_COLOR,
+    ),
+    child: Column(
+      children: [
+        Text(
+          "이메일로 회원가입",
+          style: defaultTextStyle.copyWith(
+            fontSize: 12,
+            color: GOOGLE_PRIMARY_COLOR,
+          ),
+        ),
+        SizedBox(
+          height: 3,
+        ),
+        Container(
+          height: 1.0,
+          width: 100.0,
+          color: Colors.white,
+        ),
+      ],
+    ),
+  );
 }
 
 Future<T?> loginBottomSheet<T>(
