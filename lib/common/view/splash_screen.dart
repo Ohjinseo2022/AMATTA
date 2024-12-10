@@ -1,10 +1,14 @@
 import 'package:amatta_front/common/const/color.dart';
 import 'package:amatta_front/common/layout/default_layout.dart';
+import 'package:amatta_front/common/model/permission_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   static String get routeName => 'splash';
+  final PermissionBase? permission;
+  SplashScreen({this.permission});
 
   @override
   ConsumerState<SplashScreen> createState() => _SplashScreenState();
@@ -37,36 +41,84 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       backgroundColor: BACK_GROUND_COLOR,
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Stack(
+          alignment: Alignment.center,
           children: [
-            // Image.asset(
-            //   'asset/img/main_logo.png',
-            //   width: MediaQuery.of(context).size.width / 2,
-            // ),
-            Container(
-              height: 80,
-              child: Text(
-                "AMATTA",
-                style: TextStyle(
-                  color: SELECT_TEXT_COLOR,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 32,
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 80,
+                    child: Text(
+                      "AMATTA",
+                      style: TextStyle(
+                        color: SELECT_TEXT_COLOR,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
+                      ),
+                    ),
+                  ),
+                ]),
+            if (widget.permission != null &&
+                    widget.permission is PermissionDenied ||
+                widget.permission is PermissionRestricted ||
+                widget.permission is PermissionPermanentlyDenied)
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: UNSELECT_TEXT_COLOR.withOpacity(0.5),
+                child: Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 1.5,
+                    height: 150,
+                    decoration: BoxDecoration(
+                        color: BACK_GROUND_COLOR,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: UNSELECT_TEXT_COLOR.withOpacity(0.7),
+                            blurRadius: 5.0,
+                            spreadRadius: 5.0,
+                            offset: const Offset(0, 4),
+                          )
+                        ]
+                        // border: Border.all(color: SELECT_TEXT_COLOR),
+                        ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "AMATTA",
+                          style: defaultTextStyle.copyWith(
+                              fontSize: 20, fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "접근 권한 허용 부탁드립니다.",
+                          style: defaultTextStyle.copyWith(
+                              fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            openAppSettings();
+                          },
+                          child: Text("확인"),
+                          style: ElevatedButton.styleFrom(
+                              foregroundColor: SELECT_TEXT_COLOR,
+                              backgroundColor: BACK_GROUND_COLOR_LIGHT),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-            // SizedBox(
-            //   height: 16.0,
-            // ),
-            // Container(
-            //   width: MediaQuery.of(context).size.width / 2,
-            //   child: LinearProgressIndicator(
-            //     value: controller.value,
-            //     color: UNSELECT_TEXT_COLOR,
-            //     backgroundColor: SELECT_TEXT_COLOR,
-            //   ),
-            // )
           ],
         ),
       ),

@@ -37,18 +37,9 @@ class PermissionProviderStateNotifier extends StateNotifier<PermissionBase?> {
     //granted, denied, 공통
     //permanentlyDenied -- 영구히 거부 , 다시 요청을 하지 않는 상태
     // PermissionStatus.limited restricted , provisional - ios 전용
-    for (var key in permission.keys) {
-      if (Platform.isIOS) {
-        //PermissionStatus.limited restricted , provisional - ios 전용
-      } else {}
-      // 1개라도 거부가 있는 경우
-      print(permission[key]?.isLimited);
-    }
     final calendarFullAccess = permission[Permission.calendarFullAccess]!;
     final notification = permission[Permission.notification]!;
     final reminders = permission[Permission.reminders]!;
-    print(PermissionTypeCode.getByCode(Permission.calendarFullAccess.toString())
-        .displayName);
     // 전체 허용
     bool isGranted;
     if (Platform.isIOS) {
@@ -65,24 +56,22 @@ class PermissionProviderStateNotifier extends StateNotifier<PermissionBase?> {
       state = PermissionGranted();
       return state;
     } else {
-      // if (permission[key]!.isProvisional) {
-      //
-      // }
-      // 아래 어떤 상태든 접근 권한을 허용 해야함
+      print(permission);
       for (var key in permission.keys) {
+        print("key : $key");
         if (permission[key]!.isPermanentlyDenied) {
           //영구적으로 거부 aos
           state = PermissionPermanentlyDenied(
               permission: PermissionTypeCode.getByCode(key.toString()));
           return state;
         }
+
         if (permission[key]!.isRestricted) {
           //영구적으로 거부 ios
           state = PermissionPermanentlyDenied(
               permission: PermissionTypeCode.getByCode(key.toString()));
           return state;
         }
-        print(key);
       }
       print("state : $state");
       state = PermissionDenied();
