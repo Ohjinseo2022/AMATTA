@@ -26,6 +26,8 @@ if (flutterVersionName == null) {
 android {
     namespace = "com.amatta.scheduler.amatta_front"
     compileSdk = flutter.compileSdkVersion
+//    compileSdk = 33
+//    compileSdkVersion 33
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

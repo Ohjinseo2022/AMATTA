@@ -4,6 +4,8 @@ import 'package:amatta_front/common/components/action_button.dart';
 import 'package:amatta_front/common/components/custom_floating_action_button.dart';
 import 'package:amatta_front/common/const/color.dart';
 import 'package:amatta_front/common/layout/default_layout.dart';
+import 'package:amatta_front/common/model/permission_model.dart';
+import 'package:amatta_front/common/provider/permission_provider.dart';
 import 'package:amatta_front/common/view/splash_screen.dart';
 import 'package:amatta_front/list/view/main_list_screen.dart';
 import 'package:amatta_front/user/model/user_model.dart';
@@ -12,6 +14,7 @@ import 'package:amatta_front/user/view/login_screen.dart';
 import 'package:amatta_front/user/view/my_page_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class RootTab extends ConsumerStatefulWidget {
   static String get routeName => 'rootTab';
@@ -52,16 +55,67 @@ class _RootTabState extends ConsumerState<RootTab>
     animationController.dispose();
     controller.removeListener(tabListener);
     // TODO: implemet dispose
+
     super.dispose();
+  }
+
+  Future<PermissionStatus> initPermission() async {
+    final permission = await Permission.calendarFullAccess.request();
+    print(Permission.calendarFullAccess.runtimeType == Permission);
+    if (permission != PermissionStatus.granted) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          // barrierColor: Colors.white,
+          builder: (context) {
+            return AlertDialog(
+              content: Container(
+                width: MediaQuery.of(context).size.width / 4,
+                height: MediaQuery.of(context).size.height / 10,
+                child: Center(
+                    child: Text(
+                  "접근권한을 허용해 주세요.",
+                  style: defaultTextStyle.copyWith(fontWeight: FontWeight.w700),
+                )),
+              ),
+              actions: [
+                ElevatedButton(
+                    onPressed: () {
+                      openAppSettings();
+                    },
+                    child: Text("확인"))
+              ],
+            );
+          });
+
+      // throw "캘린더 접근권한이 없습니다.";
+    }
+    return permission;
   }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(userAuthProvider);
+    final permission = ref.watch(permissionProvider);
+    // if (permission is PermissionLoading) {
+    //   return SplashScreen();
+    // }
+    // return FutureBuilder(
+    //     future: initPermission(),
+    //     builder: (context, snapshot) {
+    //       print("snapshot : ${snapshot.data}");
+    //       return snapshot.data != PermissionStatus.granted
+    //           ? SplashScreen()
+    //           : AnimatedSwitcher(
+    //               duration: Duration(milliseconds: 500),
+    //               child: _rootTab(state: state),
+    //             );
+    //     });
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: 500),
-      child: _rootTab(state: state),
-    );
+        duration: Duration(milliseconds: 500),
+        child: permission is PermissionGranted
+            ? SplashScreen()
+            : _rootTab(state: state));
   }
 
   Widget _rootTab({required UserModelBase? state}) {
