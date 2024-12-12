@@ -4,7 +4,7 @@ import 'package:amatta_front/common/const/data.dart';
 
 class DataUtils {
   static DateTime stringToDateTime(String value) {
-    return DateTime.parse(value);
+    return DateTime.parse(value).toUtc().add(Duration(hours: 9));
   }
 
   static String pathToUrl(String value) {

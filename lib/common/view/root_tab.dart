@@ -1,3 +1,4 @@
+import 'package:amatta_front/amatta/view/amatta_main_screen.dart';
 import 'package:amatta_front/category/view/category_screen.dart';
 import 'package:amatta_front/chat/view/chat_room_list.dart';
 import 'package:amatta_front/common/components/action_button.dart';
@@ -39,7 +40,7 @@ class _RootTabState extends ConsumerState<RootTab>
     animationController
       ..duration = Duration(milliseconds: 500)
       ..reverseDuration = Duration(milliseconds: 500);
-    controller = TabController(length: 4, vsync: this);
+    controller = TabController(length: 3, vsync: this);
     controller.addListener(tabListener);
   }
 
@@ -73,9 +74,11 @@ class _RootTabState extends ConsumerState<RootTab>
 
   Widget _rootTab({required UserModelBase? state}) {
     List<dynamic> tabList = [
-      {"title": "AMATTA", "child": MainListScreen()},
+      // {"title": "AMATTA", "child": MainListScreen()},
+      {"title": "AMATTA", "child": AmattaMainScreen()},
+
       {"title": "카테고리", "child": CategoryScreen()},
-      {"title": "메세지", "child": ChatRoomList()},
+      // {"title": "메세지", "child": ChatRoomList()},
       {
         "title": state is UserMinModel ? "메이페이지" : null,
         "child": _MyPageOrLoginPageLayout(isLogin: state is UserMinModel)
@@ -90,85 +93,89 @@ class _RootTabState extends ConsumerState<RootTab>
       state = UserModelGuest();
     }
     return DefaultLayout(
-        title: tabList[index]["title"],
-        child: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          controller: controller,
-          children: tabList.map((e) => e["child"] as Widget).toList(),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: SELECT_TEXT_COLOR,
-          unselectedItemColor: UNSELECT_TEXT_COLOR,
-          backgroundColor: BACK_GROUND_COLOR,
-          elevation: 1,
-          selectedFontSize: 10,
-          unselectedFontSize: 10,
-          type: BottomNavigationBarType.fixed,
-          onTap: (int index) {
-            if (index == 3 && state is UserModelGuest) {
-              loginBottomSheet(context, animationController);
-              return;
-            }
-            controller.animateTo(index);
-          },
-          currentIndex: index,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(index == 0 ? Icons.home : Icons.home_outlined),
-              label: "메인",
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(
-                    index == 1 ? Icons.interests : Icons.interests_outlined),
-                label: "카테고리"),
-            BottomNavigationBarItem(
-                icon:
-                    Icon(index == 2 ? Icons.groups_2 : Icons.groups_2_outlined),
-                label: "메세지"),
-            // BottomNavigationBarItem(
-            //     icon: Icon(Icons.accessibility_new_outlined), label: "로그인"),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  index == 3
-                      ? Icons.account_circle
-                      : Icons.account_circle_outlined,
-                ),
-                label: state is UserMinModel ? "마이페이지" : "로그인"),
-          ],
-        ),
-        floatingActionButton:
-            // _floatingActionButtons(),
-            CustomFloatingActionButton(
-          distance: 70,
-          children: [
-            ActionButton(
-              onPressed: () {},
+      title: tabList[index]["title"],
+      child: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
+        controller: controller,
+        children: tabList.map((e) => e["child"] as Widget).toList(),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: SELECT_TEXT_COLOR,
+        unselectedItemColor: UNSELECT_TEXT_COLOR,
+        backgroundColor: BACK_GROUND_COLOR,
+        elevation: 1,
+        selectedFontSize: 10,
+        unselectedFontSize: 10,
+        type: BottomNavigationBarType.fixed,
+        onTap: (int index) {
+          if (index == 2 && state is UserModelGuest) {
+            loginBottomSheet(context, animationController);
+            return;
+          }
+          controller.animateTo(index);
+        },
+        currentIndex: index,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(index == 0
+                ? Icons.calendar_month
+                : Icons.calendar_month_outlined),
+            label: "아마따",
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(index == 1
+                  ? Icons.content_paste
+                  : Icons.content_paste_outlined),
+              label: "아차차"),
+          // BottomNavigationBarItem(
+          //     icon:
+          //         Icon(index == 2 ? Icons.groups_2 : Icons.groups_2_outlined),
+          //     label: "메세지"),
+          // BottomNavigationBarItem(
+          //     icon: Icon(Icons.accessibility_new_outlined), label: "로그인"),
+          BottomNavigationBarItem(
               icon: Icon(
-                Icons.add_chart,
+                index == 3
+                    ? Icons.account_circle
+                    : Icons.account_circle_outlined,
               ),
-              label: "대시보드",
-            ),
-            ActionButton(
-              onPressed: () {},
-              icon: Icon(Icons.handshake),
-              label: "일정추가",
-            ),
-            ActionButton(
-              onPressed: () {},
-              icon: Icon(Icons.group_add),
-              label: "방만들기",
-            ),
-            ActionButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.settings,
-              ),
-              label: "설정",
-            ),
-          ],
-        ),
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.centerDocked);
+              label: state is UserMinModel ? "마이페이지" : "로그인"),
+        ],
+      ),
+      //TODO : 화면 구성이 다양해 지면 추가할 예정임
+      // floatingActionButton:
+      //     // _floatingActionButtons(),
+      //     CustomFloatingActionButton(
+      //   distance: 70,
+      //   children: [
+      //     ActionButton(
+      //       onPressed: () {},
+      //       icon: Icon(
+      //         Icons.add_chart,
+      //       ),
+      //       label: "대시보드",
+      //     ),
+      //     ActionButton(
+      //       onPressed: () {},
+      //       icon: Icon(Icons.handshake),
+      //       label: "일정추가",
+      //     ),
+      //     ActionButton(
+      //       onPressed: () {},
+      //       icon: Icon(Icons.group_add),
+      //       label: "방만들기",
+      //     ),
+      //     ActionButton(
+      //       onPressed: () {},
+      //       icon: Icon(
+      //         Icons.settings,
+      //       ),
+      //       label: "설정",
+      //     ),
+      //   ],
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
   }
 
   Widget _MyPageOrLoginPageLayout({required bool isLogin}) {

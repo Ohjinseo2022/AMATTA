@@ -71,6 +71,10 @@ dependencies:
 
   # 액션버튼 애니메이션
   flutter_speed_dial: ^7.0.0
+  # 일정관리를 위한 달력 패키지
+  table_calendar: ^3.1.2
+  # 언어설정
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
