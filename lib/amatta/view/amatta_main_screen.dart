@@ -6,9 +6,9 @@ import 'package:amatta_front/common/utils/data_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class AmattaMainScreen extends ConsumerStatefulWidget {
+  static String get routeName => 'amattaMain';
   const AmattaMainScreen({super.key});
 
   @override

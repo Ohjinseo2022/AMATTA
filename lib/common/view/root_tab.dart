@@ -1,21 +1,17 @@
+import 'package:amatta_front/achacha/view/achacha_main_screen.dart';
 import 'package:amatta_front/amatta/view/amatta_main_screen.dart';
-import 'package:amatta_front/category/view/category_screen.dart';
-import 'package:amatta_front/chat/view/chat_room_list.dart';
-import 'package:amatta_front/common/components/action_button.dart';
-import 'package:amatta_front/common/components/custom_floating_action_button.dart';
+
 import 'package:amatta_front/common/const/color.dart';
 import 'package:amatta_front/common/layout/default_layout.dart';
 import 'package:amatta_front/common/model/permission_model.dart';
 import 'package:amatta_front/common/provider/permission_provider.dart';
 import 'package:amatta_front/common/view/splash_screen.dart';
-import 'package:amatta_front/list/view/main_list_screen.dart';
 import 'package:amatta_front/user/model/user_model.dart';
 import 'package:amatta_front/user/provider/user_auth_provider.dart';
 import 'package:amatta_front/user/view/login_screen.dart';
 import 'package:amatta_front/user/view/my_page_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class RootTab extends ConsumerStatefulWidget {
   static String get routeName => 'rootTab';
@@ -77,7 +73,8 @@ class _RootTabState extends ConsumerState<RootTab>
       // {"title": "AMATTA", "child": MainListScreen()},
       {"title": "AMATTA", "child": AmattaMainScreen()},
 
-      {"title": "카테고리", "child": CategoryScreen()},
+      // {"title": "카테고리", "child": CategoryScreen()},
+      {"title": "아차차!", "child": AchachaMainScreen()},
       // {"title": "메세지", "child": ChatRoomList()},
       {
         "title": state is UserMinModel ? "메이페이지" : null,

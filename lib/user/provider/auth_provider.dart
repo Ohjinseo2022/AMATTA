@@ -1,3 +1,5 @@
+import 'package:amatta_front/achacha/view/achacha_main_screen.dart';
+import 'package:amatta_front/amatta/view/amatta_main_screen.dart';
 import 'package:amatta_front/category/view/category_screen.dart';
 import 'package:amatta_front/chat/view/chat_room_detail.dart';
 import 'package:amatta_front/common/view/root_tab.dart';
@@ -34,11 +36,22 @@ class AuthProvider extends ChangeNotifier {
           builder: (_, state) => RootTab(),
           routes: [
             GoRoute(
-                path: "chat-room/:id",
-                name: ChatRoomDetail.routeName,
-                builder: (_, state) => ChatRoomDetail(
-                      chatRoomId: state.pathParameters['id']!,
-                    ))
+              path: "chat-room/:id",
+              name: ChatRoomDetail.routeName,
+              builder: (_, state) => ChatRoomDetail(
+                chatRoomId: state.pathParameters['id']!,
+              ),
+            ),
+            GoRoute(
+              path: 'amatta-main',
+              name: AmattaMainScreen.routeName,
+              builder: (_, state) => AmattaMainScreen(),
+            ),
+            GoRoute(
+              path: 'achacha-main',
+              name: AchachaMainScreen.routeName,
+              builder: (_, state) => AchachaMainScreen(),
+            ),
           ],
         ),
         GoRoute(
@@ -51,26 +64,26 @@ class AuthProvider extends ChangeNotifier {
           name: SplashScreen.routeName,
           builder: (_, state) => SplashScreen(),
         ),
-        GoRoute(
-          path: '/category',
-          name: CategoryScreen.routeName,
-          builder: (_, state) => CategoryScreen(),
-        ),
+        // GoRoute(
+        //   path: '/category',
+        //   name: CategoryScreen.routeName,
+        //   builder: (_, state) => CategoryScreen(),
+        // ),
         GoRoute(
           path: '/myPage',
           name: MyPageScreen.routeName,
           builder: (_, state) => MyPageScreen(),
         ),
-        GoRoute(
-          path: '/mainList',
-          name: MainListScreen.routeName,
-          builder: (_, state) => MainListScreen(),
-        ),
+        // GoRoute(
+        //   path: '/mainList',
+        //   name: MainListScreen.routeName,
+        //   builder: (_, state) => MainListScreen(),
+        // ),
         GoRoute(
           path: '/join',
           name: JoinScreen.routeName,
           builder: (_, state) => JoinScreen(),
-        )
+        ),
         // GoRoute(
         //     path: '/chat-room',
         //     name: ChatRoomList.routeName,
