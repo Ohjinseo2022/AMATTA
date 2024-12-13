@@ -15,33 +15,28 @@ class _AchachaMainScreenState extends ConsumerState<AchachaMainScreen> {
   @override
   Widget build(BuildContext context) {
     // return PaginationListView(
-    //     provider: chatProvider,
+    //     provider: chatProvider, // 리스트형태의 데이터 조회 함
     //     itemBuilder: <IModelWithId>(_, index, model) {
     //       return GestureDetector();
     //     });
     return ListView.separated(
       itemBuilder: (context, index) {
-        if (index == 0) {
-          return Padding(
-            padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height / 10),
-            child: AchachaCard(
-                model: index,
-                onTap: () {
-                  print("상세이동");
-                }),
-          );
-        }
         if (index == lengthIndex - 1) {
           return AchachaCard(onTap: () {
             print("신규생성");
           });
         }
-        return AchachaCard(
-            model: index,
-            onTap: () {
-              print("상세이동");
-            });
+        return Padding(
+          padding: EdgeInsets.only(
+              top: index == 0 && lengthIndex < 6
+                  ? MediaQuery.of(context).size.height / 10
+                  : 0),
+          child: AchachaCard(
+              model: index,
+              onTap: () {
+                print("상세이동");
+              }),
+        );
       },
       itemCount: lengthIndex,
       separatorBuilder: (BuildContext context, int index) {

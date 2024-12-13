@@ -1,3 +1,4 @@
+import 'package:amatta_front/common/components/text_editor.dart';
 import 'package:amatta_front/common/const/color.dart';
 import 'package:amatta_front/user/provider/user_auth_provider.dart';
 import 'package:flutter/material.dart';
@@ -14,15 +15,20 @@ class MyPageScreen extends ConsumerStatefulWidget {
 class _MyPageScreenState extends ConsumerState<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-          onPressed: () {
-            ref.read(userAuthProvider.notifier).userLogout();
-          },
-          child: Text(
-            "로그아웃",
-            style: defaultTextStyle,
-          )),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ElevatedButton(
+            onPressed: () {
+              ref.read(userAuthProvider.notifier).userLogout();
+            },
+            child: Text(
+              "로그아웃",
+              style: defaultTextStyle,
+            )),
+        TextEditor()
+      ],
     );
   }
 }
